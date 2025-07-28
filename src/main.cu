@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <cuda_runtime.h>
 // #include <torch/torch.h>
-#include <hellocuda.h>
+#include <hellocuda.cuh>
 
 __global__ void helloCudakernel(cutlass::half_t x) {
     printf("Device: %f\n", float(x*2.0_hf));
@@ -62,7 +62,7 @@ int helloCuda() {
 }
 
 int main() {
-    bool isCudaAvailable = checkCudaIsAvailable();
+    bool isCudaAvailable = hellocuda::checkCudaIsAvailable();
     if (!isCudaAvailable) {
         return 1;
     }

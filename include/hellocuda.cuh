@@ -5,6 +5,8 @@
 #include <torch/types.h>
 #include <torch/cuda.h>
 
+namespace hellocuda {
+
 bool checkCudaIsAvailable() {
     std::cout << "PyTorch CUDA available: " << torch::cuda::is_available() << std::endl;
     std::cout << "CUDA device count: " << torch::cuda::device_count() << std::endl;
@@ -29,3 +31,4 @@ bool checkCudaIsAvailable() {
     return false;
 }
 
+} // namespace hellocuda 

@@ -80,3 +80,7 @@ HelloCUDA/
 3. **CUDA architecture errors**:
    - Update `CMAKE_CUDA_ARCHITECTURES` in CMakeLists.txt for your GPU
    - For example: `set(CMAKE_CUDA_ARCHITECTURES "75")` for Turing GPUs
+
+## Ref
+- vLLM
+- onnxruntime
