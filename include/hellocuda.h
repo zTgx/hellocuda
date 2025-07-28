@@ -4,8 +4,6 @@
 #include <ATen/core/TensorBody.h>
 #include <torch/types.h>
 #include <torch/cuda.h>
-// #include <c10/Device.h>
-// #include <c10/DeviceType.h>
 
 bool checkCudaIsAvailable() {
     std::cout << "PyTorch CUDA available: " << torch::cuda::is_available() << std::endl;
@@ -30,3 +28,4 @@ bool checkCudaIsAvailable() {
     
     return false;
 }
+

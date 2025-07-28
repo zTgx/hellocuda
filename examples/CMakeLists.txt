@@ -23,35 +23,26 @@ endif()
 
 # 查找依赖
 find_package(CUDAToolkit REQUIRED)
-find_package(Boost REQUIRED COMPONENTS system thread json)
-
-# 定义公共编译选项
-add_compile_options(
-    "$<$<COMPILE_LANGUAGE:CUDA>:-Xcompiler=-Wall --default-stream per-thread>"
-    "$<$<COMPILE_LANGUAGE:CXX>:-Wall>"
-)
+# find_package(Boost REQUIRED COMPONENTS system thread json)
 
 # 定义公共链接库
 set(COMMON_LIBS
     CUDA::cudart
     CUDA::cublas
     CUDA::cublasLt
-    Boost::boost
-    Boost::system
-    Boost::thread
-    Boost::json
     torch
     torch_cpu
     c10
+    c10_cuda
     $<$<BOOL:${CUDA_FOUND}>:torch_cuda>
     $<$<BOOL:${CUDA_FOUND}>:c10_cuda>
 )
 
 # 编译examples目录下的指定示例
 set(EXAMPLE_FILES
-    "simple.cpp"
-    "cublas.cpp"
-    # "other_example.cpp"   # 注释掉不需要编译的示例
+    # "simple.cpp"
+    # "cublas.cpp"
+    "cutlass.cu"
 )
 
 foreach(example_file ${EXAMPLE_FILES})
@@ -63,9 +54,16 @@ foreach(example_file ${EXAMPLE_FILES})
         
         add_executable(${example_name} ${example_path})
         
+        target_compile_options(${example_name} PRIVATE
+            $<$<COMPILE_LANGUAGE:CUDA>:
+            -Xcompiler=-Wall
+            --default-stream per-thread
+            >
+        )
+
         target_include_directories(${example_name} PRIVATE
             ${CMAKE_CURRENT_SOURCE_DIR}/include
-            ${CUTLASSPATH}/include
+            ${CUTLASSPATH}
             ${LIBTORCH_HOME}/include
             ${LIBTORCH_HOME}/include/torch/csrc/api/include
             ${Boost_INCLUDE_DIRS}
