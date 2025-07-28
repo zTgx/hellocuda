@@ -5,7 +5,7 @@
 // #include <torch/torch.h>
 #include <hellocuda.cuh>
 
-__global__ void helloCudakernel(cutlass::half_t x) {
+__global__ __launch_bounds__(CUDA_MAX_THREADS_PER_BLOCK) void helloCudakernel(cutlass::half_t x) {
     printf("Device: %f\n", float(x*2.0_hf));
 }
 
