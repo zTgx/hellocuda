@@ -32,6 +32,18 @@ if(NOT EXISTS "${CUTLASSPATH}/cutlass/numeric_types.h")
     message(FATAL_ERROR "CUTLASS not found at ${CUTLASSPATH}\nPlease set CUTLASSPATH or install CUTLASS")
 endif()
 
+### libtorch
+set(LIBTORCH_HOME "$ENV{LIBTORCH_HOME}")
+if(NOT LIBTORCH_HOME)
+    # message(FATAL_ERROR "Please set LIBTORCH_HOME environment variable")
+    set(LIBTORCH_HOME "$ENV{HOME}/Applications/libtorch")
+endif()
+
+# Verify LibTorch exists
+if(NOT EXISTS "${LIBTORCH_HOME}/include/torch/csrc/api/include/torch/torch.h")
+    message(FATAL_ERROR "LibTorch not found at ${LIBTORCH_HOME}")
+endif()
+
 # 查找CUDA库
 find_package(CUDAToolkit REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system thread json)
@@ -62,6 +74,13 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${CUTLASSPATH}/include
     ${Boost_INCLUDE_DIRS} # Include Boost headers
     ${CUDAToolkit_INCLUDE_DIRS}
+
+    ${LIBTORCH_HOME}/include
+    ${LIBTORCH_HOME}/include/torch/csrc/api/include
+)
+
+target_link_directories(${PROJECT_NAME} PRIVATE
+    ${LIBTORCH_HOME}/lib
 )
 
 # 链接cuBLAS和其他必要库
@@ -78,6 +97,15 @@ target_link_libraries(${PROJECT_NAME}
         Boost::system # shared_ptr实际依赖的组件
         Boost::thread # 如果需要线程支持
         Boost::json   # 如果使用了Boost JSON : sudo apt-get install libboost-json-dev
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    torch
+    torch_cpu
+    c10
+    c10_cuda
+    $<$<BOOL:${CUDA_FOUND}>:c10_cuda>
+    $<$<BOOL:${CUDA_FOUND}>:torch_cuda>
 )
 
 # 针对MX150的优化选项
