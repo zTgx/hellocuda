@@ -1,0 +1,73 @@
+# Build directories
+build/
+out/
+bin/
+*.user
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+*.cmake
+Makefile
+
+# Executable and libraries
+${PROJECT_NAME}  # Matches your project name variable
+*.so
+*.a
+*.lib
+*.dll
+*.exe
+
+# CUDA specific
+*.cubin
+*.ptx
+*.fatbin
+*.o
+*.obj
+
+# IDE specific
+.vscode/
+.idea/
+*.sln
+*.vcxproj*
+*.vcproj*
+*.xcodeproj/
+*.xcworkspace/
+
+# Editor temporary files
+*~
+*.swp
+*.bak
+*.tmp
+
+# Dependency directories
+deps/
+third_party/
+
+# Logs and diagnostics
+*.log
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+*.gcda
+*.gcno
+*.gcov
+
+# Python (if any)
+__pycache__/
+*.py[cod]
+
+# Local development files
+local.*
+.env
