@@ -42,7 +42,8 @@ set(COMMON_LIBS
 set(EXAMPLE_FILES
     # "simple.cpp"
     # "cublas.cpp"
-    "cutlass.cu"
+    # "cutlass.cu"
+    "hi.cu"
 )
 
 foreach(example_file ${EXAMPLE_FILES})
