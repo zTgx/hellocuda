@@ -15,6 +15,9 @@ namespace A {
     namespace B {
         static const bool isb = true;
         const static bool isa = false;
+
+        // in cxx20 -> char8_t
+        const static char me = u8'o';
     }
 }
 
