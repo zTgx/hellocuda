@@ -21,6 +21,7 @@ ${PROJECT_NAME}  # Matches your project name variable
 *.lib
 *.dll
 *.exe
+*.out
 
 # CUDA specific
 *.cubin
@@ -71,3 +72,4 @@ __pycache__/
 # Local development files
 local.*
 .env
+
